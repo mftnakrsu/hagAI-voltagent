@@ -1,30 +1,30 @@
-# 🎯 Hagai - AI-Powered Asana Project Management Assistant
+#  Hagai - AI-Powered Asana Project Management Assistant
 
 Hagai is an intelligent project management assistant built with [VoltAgent](https://voltagent.dev) that integrates with Asana to provide comprehensive task and project insights.
 
 ## Features
 
-### 📊 Daily Status Reporting
+###  Daily Status Reporting
 - **What was done today?** - Tasks completed today with completion timestamps
 - **What was updated today?** - All task modifications in the current day
 - **What's due today?** - Tasks with today's due date
 
-### 📅 Weekly Planning & Team Workload
+###  Weekly Planning & Team Workload
 - **Weekly task planning** - All tasks due within the current week
 - **Team workload analysis** - Task distribution across team members
 - **Overdue tasks by person** - Identify bottlenecks and at-risk assignments
 
-### 🗂️ Project & Section Status Tracking
+###  Project & Section Status Tracking
 - **Project status analysis** - Overall completion rates and task counts
 - **Section breakdown** - Detailed progress by project sections
 - **Workload by section** - Identify sections with the most work
 
-### 📈 Due Date Change Tracking
+###  Due Date Change Tracking
 - **Task postponement history** - Track how many times tasks have been delayed
 - **Most postponed tasks** - Identify problematic tasks and patterns
 - **Recent due date changes** - Monitor recent deadline adjustments
 
-### 🔍 Additional Queries
+###  Additional Queries
 - **Overdue tasks** - All incomplete tasks past their due date
 - **Unassigned tasks** - Tasks without owners
 - **Tasks without due dates** - Missing deadlines
