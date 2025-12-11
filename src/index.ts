@@ -16,7 +16,7 @@ import { createHagaiAgent } from './agent.js';
 const ASANA_ACCESS_TOKEN = process.env.ASANA_ACCESS_TOKEN;
 const ASANA_WORKSPACE_GID = process.env.ASANA_WORKSPACE_GID;
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'anthropic';
-const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
+const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet';
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o';
 const GOOGLE_MODEL = process.env.GOOGLE_MODEL || 'gemini-1.5-pro-latest';
 
