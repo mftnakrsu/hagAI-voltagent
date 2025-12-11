@@ -47,3 +47,6 @@ coverage/
 # Temporary files
 tmp/
 temp/
+
+# VoltAgent framework (not needed in repo, use npm packages instead)
+voltagent/
