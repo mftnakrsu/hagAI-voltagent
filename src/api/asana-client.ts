@@ -251,6 +251,42 @@ export class AsanaClient {
   }
 
   /**
+   * Get authenticated user
+   */
+  async getMe(): Promise<AsanaUser> {
+    await this.checkRateLimit();
+
+    const usersApi = new Asana.UsersApi();
+    const optFields = ['gid', 'name', 'email'];
+
+    try {
+      const response = await usersApi.getUser('me', {
+        opt_fields: optFields.join(','),
+      });
+      return response.data as AsanaUser;
+    } catch (error: any) {
+      console.error('Error fetching current user:', error);
+      throw new Error(`Failed to fetch current user: ${error.message || error}`);
+    }
+  }
+
+  /**
+   * Search users by name
+   */
+  async searchUsers(query: string): Promise<AsanaUser[]> {
+    // Since Asana doesn't have a direct search API for users in workspace that is efficient,
+    // we fetch all workspace users and filter locally. This is okay for most workspaces.
+    // For very large workspaces, we might want to implement a more sophisticated approach or typeahead.
+    const allUsers = await this.getWorkspaceUsers();
+    const lowerQuery = query.toLowerCase();
+
+    return allUsers.filter(user =>
+      user.name.toLowerCase().includes(lowerQuery) ||
+      (user.email && user.email.toLowerCase().includes(lowerQuery))
+    );
+  }
+
+  /**
    * Get workspace projects
    */
   async getWorkspaceProjects(): Promise<AsanaProject[]> {

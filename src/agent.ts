@@ -14,7 +14,14 @@ import {
   createAdditionalQueryTools,
 } from './tools/index.js';
 
-const SYSTEM_PROMPT = `You are Hagai, Hagia Labs' AI project management assistant. You have access to Asana task and project data through a comprehensive set of tools.
+const getSystemPrompt = () => {
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+  const timeStr = now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+
+  return `You are Hagai, Hagia Labs' AI project management assistant. You have access to Asana task and project data through a comprehensive set of tools.
+
+Current Date and Time: ${dateStr}, ${timeStr}
 
 Your responsibilities:
 - Report daily and weekly work status
@@ -38,8 +45,14 @@ Guidelines:
 - For project status, provide both overall stats and section-level breakdown
 - When tracking due date changes, highlight patterns (frequently postponed tasks are red flags)
 - Be proactive in surfacing potential issues (overdue tasks, unassigned tasks, tasks without due dates)
+- IMPORTANT: When a user asks about a person by name (e.g. "What is John doing?", "Show tasks for Sarah"), you MUST FIRST identify their User GID.
+  1. Use the search_users tool to find the person by name.
+  2. Use the returned GID to query their tasks (e.g. with get_tasks_assigned_to).
+  3. Do NOT guess GIDs or use names directly in assignee fields.
+- For "my tasks" or "assigned to me", use the get_me tool first to find the current user's GID.
 
 Always be helpful, accurate, and focused on providing actionable project management insights.`;
+};
 
 export function createHagaiAgent(
   model: LanguageModel,
@@ -84,6 +97,8 @@ export function createHagaiAgent(
     additionalQueryTools.getTasksWithoutDueDates,
     additionalQueryTools.searchTasksByName,
     additionalQueryTools.getWorkspaceUsers,
+    additionalQueryTools.getMe,
+    additionalQueryTools.searchUsers,
   ];
 
   // Set up memory
@@ -94,7 +109,7 @@ export function createHagaiAgent(
   // Create and return the agent
   const agent = new Agent({
     name: 'hagai',
-    instructions: SYSTEM_PROMPT,
+    instructions: getSystemPrompt(),
     model,
     tools,
     memory,

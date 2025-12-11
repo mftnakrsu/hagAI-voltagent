@@ -10,7 +10,8 @@
     "start": "node dist/index.js",
     "lint": "biome check .",
     "lint:fix": "biome check . --apply",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "volt": "volt"
   },
   "keywords": [
     "voltagent",
@@ -22,13 +23,14 @@
   "author": "Hagia Labs",
   "license": "MIT",
   "dependencies": {
-    "@ai-sdk/anthropic": "^1.0.0",
-    "@ai-sdk/openai": "^1.0.0",
+    "@ai-sdk/anthropic": "^2.0.54",
+    "@ai-sdk/google": "^2.0.45",
+    "@ai-sdk/openai": "^2.0.80",
     "@voltagent/core": "^1.2.19",
     "@voltagent/libsql": "^1.0.0",
     "@voltagent/logger": "^1.0.0",
     "@voltagent/server-hono": "^1.0.0",
-    "ai": "^5.0.0",
+    "ai": "^5.0.110",
     "asana": "^3.0.0",
     "date-fns": "^3.0.0",
     "dotenv": "^16.4.5",
@@ -37,6 +39,7 @@
   "devDependencies": {
     "@types/asana": "^0.18.17",
     "@types/node": "^20.0.0",
+    "@voltagent/cli": "^0.1.17",
     "tsup": "^8.0.0",
     "tsx": "^4.7.0",
     "typescript": "^5.8.0"

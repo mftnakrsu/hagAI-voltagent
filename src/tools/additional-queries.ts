@@ -307,11 +307,83 @@ export function createAdditionalQueryTools(asanaClient: AsanaClient) {
     },
   });
 
+  /**
+   * Get authenticated user
+   */
+  const getMe = createTool({
+    name: 'get_me',
+    description:
+      'Identifies the current authenticated user. Use this when the user refers to "me", "my tasks", or "assigned to me". Returns the user\'s GID and name.',
+    parameters: z.object({}),
+    execute: async () => {
+      try {
+        const me = await asanaClient.getMe();
+        return {
+          message: `Current user identified: ${me.name}`,
+          user: {
+            name: me.name,
+            gid: me.gid,
+            email: me.email || 'No email',
+          },
+        };
+      } catch (error) {
+        return {
+          error: `Failed to fetch current user: ${error}`,
+        };
+      }
+    },
+  });
+
+  /**
+   * Search users
+   */
+  const searchUsers = createTool({
+    name: 'search_users',
+    description:
+      'Searches for users in the workspace by name or email. Use this FIRST when the user asks about someone else\'s tasks (e.g. "What is John doing?") to find their GID before querying tasks.',
+    parameters: z.object({
+      query: z.string().describe('Name or email to search for'),
+    }),
+    execute: async ({ query }) => {
+      try {
+        const users = await asanaClient.searchUsers(query);
+
+        if (users.length === 0) {
+          return {
+            message: `No users found matching "${query}".`,
+            count: 0,
+            users: [],
+          };
+        }
+
+        const formattedUsers = users.map(user => ({
+          name: user.name,
+          gid: user.gid,
+          email: user.email || 'No email',
+        }));
+
+        return {
+          message: `Found ${users.length} user(s) matching "${query}".`,
+          count: users.length,
+          users: formattedUsers,
+        };
+      } catch (error) {
+        return {
+          error: `Failed to search users: ${error}`,
+          count: 0,
+          users: [],
+        };
+      }
+    },
+  });
+
   return {
     getOverdueTasks,
     getUnassignedTasks,
     getTasksWithoutDueDates,
     searchTasksByName,
     getWorkspaceUsers,
+    getMe,
+    searchUsers,
   };
 }

@@ -9,6 +9,7 @@ import { createPinoLogger } from '@voltagent/logger';
 import { honoServer } from '@voltagent/server-hono';
 import { anthropic } from '@ai-sdk/anthropic';
 import { openai } from '@ai-sdk/openai';
+import { google } from '@ai-sdk/google';
 import { createHagaiAgent } from './agent.js';
 
 // Load environment variables
@@ -17,6 +18,7 @@ const ASANA_WORKSPACE_GID = process.env.ASANA_WORKSPACE_GID;
 const LLM_PROVIDER = process.env.LLM_PROVIDER || 'anthropic';
 const ANTHROPIC_MODEL = process.env.ANTHROPIC_MODEL || 'claude-3-5-sonnet-20241022';
 const OPENAI_MODEL = process.env.OPENAI_MODEL || 'gpt-4o';
+const GOOGLE_MODEL = process.env.GOOGLE_MODEL || 'gemini-1.5-pro-latest';
 
 // Validate required environment variables
 if (!ASANA_ACCESS_TOKEN) {
@@ -44,9 +46,17 @@ if (LLM_PROVIDER === 'anthropic') {
     process.exit(1);
   }
   model = openai(OPENAI_MODEL);
+
   console.log(`✓ Using OpenAI model: ${OPENAI_MODEL}`);
+} else if (LLM_PROVIDER === 'google') {
+  if (!process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
+    console.error('❌ GOOGLE_GENERATIVE_AI_API_KEY is required when using Google provider');
+    process.exit(1);
+  }
+  model = google(GOOGLE_MODEL);
+  console.log(`✓ Using Google model: ${GOOGLE_MODEL}`);
 } else {
-  console.error(`❌ Invalid LLM_PROVIDER: ${LLM_PROVIDER}. Use 'anthropic' or 'openai'`);
+  console.error(`❌ Invalid LLM_PROVIDER: ${LLM_PROVIDER}. Use 'anthropic', 'openai', or 'google'`);
   process.exit(1);
 }
 
