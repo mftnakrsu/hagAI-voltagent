@@ -1,0 +1,47 @@
+{
+  "name": "hagai",
+  "version": "1.0.0",
+  "description": "Hagai - AI-powered Asana project management assistant built with VoltAgent",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsup",
+    "start": "node dist/index.js",
+    "lint": "biome check .",
+    "lint:fix": "biome check . --apply",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "voltagent",
+    "asana",
+    "ai",
+    "project-management",
+    "assistant"
+  ],
+  "author": "Hagia Labs",
+  "license": "MIT",
+  "dependencies": {
+    "@ai-sdk/anthropic": "^1.0.0",
+    "@ai-sdk/openai": "^1.0.0",
+    "@voltagent/core": "^1.2.19",
+    "@voltagent/libsql": "^1.0.0",
+    "@voltagent/logger": "^1.0.0",
+    "@voltagent/server-hono": "^1.0.0",
+    "ai": "^5.0.0",
+    "asana": "^3.0.0",
+    "date-fns": "^3.0.0",
+    "dotenv": "^16.4.5",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/asana": "^0.18.17",
+    "@types/node": "^20.0.0",
+    "tsup": "^8.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.8.0"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
