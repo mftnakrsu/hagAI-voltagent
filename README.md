@@ -1,6 +1,6 @@
 #  Hagai - AI-Powered Asana Project Management Assistant
 
-Hagai is an intelligent project management assistant built with [VoltAgent](https://voltagent.dev) that integrates with Asana to provide comprehensive task and project insights.
+Hagai is an intelligent project management assistant built with [VoltAgent](https://voltagent.dev) that integrates with Asana to provide comprehensive task and project insights...
 
 ## Features
 
